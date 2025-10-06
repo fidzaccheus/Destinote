@@ -16,13 +16,13 @@
 
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #D2D4D8;">
         <div class="container-fluid px-5">
-            <a class="navbar-brand fw-bold fs-3" href="#">
+            <a class="navbar-brand fw-bold fs-3" href="destinations.php">
                 <img src="images/destinote_logo.png" alt="Destinote Logo" width="40" height="40"
                     class="d-inline-block align-text-top">
                 Destinote
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarNav" aria-expanded="false">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
@@ -33,8 +33,10 @@
                 </ul>
                 <div
                     class="d-flex flex-lg-row flex-column align-items-lg-center align-items-stretch fs-5 pe-5 gap-2 mt-3 mt-lg-0">
-                    <a href="login.html" class="btn btn-outline-* btn-signin fw-semibold text-black me-4">Sign In</a>
-                    <a href="register.html" class="btn btn-primary fw-semibold">Get Started</a>
+                    <button class="btn btn-outline-* btn-signin fw-semibold text-black me-4" data-bs-toggle="modal"
+                        data-bs-target="#signInModal">Sign In</button>
+                    <button class="btn btn-primary fw-semibold" data-bs-toggle="modal" data-bs-target="#signUpModal">Get
+                        Started</button>
                 </div>
             </div>
         </div>
@@ -50,7 +52,7 @@
             <p class="text-white fs-4 mb-4">
                 Your private space to track, organize, and conquer your dream travel destinations.
             </p>
-            <button class="btn start-journey-btn">
+            <button class="btn" data-bs-toggle="modal" data-bs-target="#signInModal" id="start-journey-btn">
                 <i class="bi bi-geo-alt-fill me-2"></i>
                 Start Your Journey
             </button>
@@ -118,8 +120,6 @@
             </div>
     </section>
 
-
-
     <section class="container-fluid bg-white pb-5 mt-5" id="how-it-works">
         <div class="container">
             <h2 class="text-center display-4 fw-bold pt-5 pb-2">How It Works</h2>
@@ -165,10 +165,77 @@
                 <h2 class="display-4 fw-bold pt-5 pb-2">Ready to Start Your Adventure?</h2>
                 <p class="fs-5 mb-5">Join Destinote today and turn your travel dreams into reality.
                     Create your private collection of dream destinations and track your journey around the world.</p>
-                <button class="btn btn-light btn-lg fw-semibold">Get Started Free</button>
+                <button class="btn btn-light btn-lg fw-semibold" data-bs-toggle="modal"
+                    data-bs-target="#signUpModal">Get Started Free</button>
             </div>
         </div>
     </section>
+
+    <div class="modal fade" tabindex="-1" id="signInModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Welcome to Destinote!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <h2 class="text-center fs-5 mb-3">Sign in to your account</h2>
+                    <form class="fw-medium">
+                        <div class="mb-3">
+                            <label class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                            <label class="form-label mt-3">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                                required>
+                        </div>
+                        <div class="d-grid my-2">
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="signUpModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Welcome to Destinote!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <h2 class="text-center fs-5 mb-3">Create your account</h2>
+                    <form class="fw-medium">
+                        <div class="mb-3">
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="fname" placeholder="First Name"
+                                        required>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lname" placeholder="Last Name" required>
+                                </div>
+                            </div>
+                            <label class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                            <label class="form-label mt-3">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                                required>
+                            <label class="form-label mt-3">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword"
+                                placeholder="Re-enter your password" required>
+                        </div>
+                        <div class="d-grid my-2">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <footer class="text-dark text-center py-4" style="background-color: #EDEFF0;">
         <div class="container">
