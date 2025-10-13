@@ -7,8 +7,7 @@ body {
 }
 
 /* ====== HERO SECTION ====== */
-.hero-section {
-  background-image: url("/images/background.jpg");
+.hero-section img {
   background-size: cover;
   background-position: center;
   height: 100vh;

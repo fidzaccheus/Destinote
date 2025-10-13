@@ -7,13 +7,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="CSS/style.css">
 
     <title>Destinote</title>
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #D2D4D8;">
         <div class="container-fluid px-5">
             <a class="navbar-brand fw-bold fs-3" href="destinations.php">
@@ -42,7 +41,7 @@
         </div>
     </nav>
 
-    <section class="hero-section">
+    <section class="hero-section" style="background-image: url('images/background.jpg');">
         <div class="hero-overlay d-flex flex-column justify-content-center align-items-center text-center">
             <span><img src="images/destinote_logo.png" alt="Destinote Logo" width="80" height="80"
                     class="floating-logo">
@@ -171,7 +170,7 @@
         </div>
     </section>
 
-    <div class="modal fade" tabindex="-1" id="signInModal">
+    <div class="modal fade" data-bs-backdrop="static" tabindex="-1" id="signInModal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -180,13 +179,15 @@
                 </div>
                 <div class="modal-body p-4">
                     <h2 class="text-center fs-5 mb-3">Sign in to your account</h2>
-                    <form class="fw-medium">
+                    <div id="signinMessage" class="alert d-none text-center" role="alert"></div>
+                    <form action="includes/signin_process.php" method="POST" class="fw-medium">
                         <div class="mb-3">
                             <label class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-                            <label class="form-label mt-3">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                            <input type="email" name="email_address" class="form-control" placeholder="Enter your email"
                                 required>
+                            <label class="form-label mt-3">Password</label>
+                            <input type="password" name="password" class="form-control"
+                                placeholder="Enter your password" required>
                         </div>
                         <div class="d-grid my-2">
                             <button type="submit" class="btn btn-primary">Sign In</button>
@@ -196,7 +197,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" tabindex="-1" id="signUpModal">
+
+    <div class="modal fade" data-bs-backdrop="static" tabindex="-1" id="signUpModal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -205,26 +207,29 @@
                 </div>
                 <div class="modal-body p-4">
                     <h2 class="text-center fs-5 mb-3">Create your account</h2>
-                    <form class="fw-medium">
+                    <div id="signupMessage" class="alert d-none text-center" role="alert"></div>
+                    <form action="includes/register_process.php" method="POST" class="fw-medium">
                         <div class="mb-3">
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <label class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="fname" placeholder="First Name"
+                                    <input type="text" name="first_name" class="form-control" placeholder="First Name"
                                         required>
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lname" placeholder="Last Name" required>
+                                    <input type="text" name="last_name" class="form-control" placeholder="Last Name"
+                                        required>
                                 </div>
                             </div>
                             <label class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-                            <label class="form-label mt-3">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                            <input type="email" name="email_address" class="form-control" placeholder="Enter your email"
                                 required>
+                            <label class="form-label mt-3">Password</label>
+                            <input type="password" name="password" class="form-control"
+                                placeholder="Enter your password" required>
                             <label class="form-label mt-3">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirmPassword"
+                            <input type="password" name="confirm_password" class="form-control"
                                 placeholder="Re-enter your password" required>
                         </div>
                         <div class="d-grid my-2">
@@ -236,6 +241,113 @@
         </div>
     </div>
 
+    <div class="modal fade" id="statusModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header" id="statusModalHeader">
+                    <h5 class="modal-title fw-bold" id="statusModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body fs-5 text-center" id="statusModalMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="signinSuccessOverlay"
+        class="d-none position-fixed top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-light"
+        style="z-index: 2000; opacity: 0; transition: opacity 0.8s ease;">
+        <div class="text-center">
+            <div class="spinner-border text-success mb-3" style="width: 4rem; height: 4rem;" role="status"></div>
+            <h3 class="fw-bold text-success">Signing you in...</h3>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const status = params.get("status");
+            const message = params.get("message");
+            const showModal = params.get("showModal");
+            const email = params.get("email");
+            const redirect = params.get("redirect");
+
+            if (showModal === "signUpModal") {
+                const signUpModalEl = document.getElementById("signUpModal");
+                const signUpModal = new bootstrap.Modal(signUpModalEl);
+                const msgBox = document.getElementById("signupMessage");
+
+                signUpModal.show();
+                if (msgBox && status && message) {
+                    msgBox.classList.remove("d-none", "alert-success", "alert-danger");
+                    msgBox.classList.add("alert", status === "success" ? "alert-success" : "alert-danger");
+                    msgBox.textContent = decodeURIComponent(message);
+
+                    if (status === "success") {
+                        setTimeout(() => {
+                            msgBox.style.transition = "opacity 0.6s ease";
+                            msgBox.style.opacity = "0";
+                        }, 1500);
+
+                        setTimeout(() => {
+                            msgBox.style.display = "none";
+                            signUpModal.hide();
+                            const signInModalEl = document.getElementById("signInModal");
+                            const signInModal = new bootstrap.Modal(signInModalEl);
+                            signInModal.show();
+                            const emailInput = signInModalEl.querySelector("input[name='email_address']");
+                            if (emailInput) {
+                                if (email) emailInput.value = decodeURIComponent(email);
+                                emailInput.focus();
+                            }
+                        }, 2300);
+                    }
+                }
+            }
+
+            if (showModal === "signInModal") {
+                const signInModalEl = document.getElementById("signInModal");
+                const signInModal = new bootstrap.Modal(signInModalEl);
+                const msgBox = document.getElementById("signinMessage");
+
+                signInModal.show();
+
+                if (msgBox && status && message) {
+                    msgBox.classList.remove("d-none", "alert-success", "alert-danger");
+                    msgBox.classList.add("alert", status === "success" ? "alert-success" : "alert-danger");
+                    msgBox.textContent = decodeURIComponent(message);
+
+                    if (status === "success" && redirect === "dashboard") {
+                        setTimeout(() => {
+                            signInModal.hide();
+
+                            const overlay = document.getElementById("signinSuccessOverlay");
+                            overlay.classList.remove("d-none");
+                            overlay.style.opacity = "1";
+
+                            setTimeout(() => {
+                                window.location.href = "destinations.php";
+                            }, 1800);
+                        }, 1200);
+                    }
+                }
+
+                signInModalEl.addEventListener('shown.bs.modal', function () {
+                    const emailInput = signInModalEl.querySelector("input[name='email_address']");
+                    if (emailInput) emailInput.focus();
+                });
+            }
+
+            const cleanUrl = window.location.origin + window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+        });
+    </script>
+
+
+
 
     <footer class="text-dark text-center py-4" style="background-color: #EDEFF0;">
         <div class="container">
@@ -243,9 +355,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+
 </body>
 
 </html>

@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['id'])) {
+    header("Location: index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,19 +21,18 @@
 
 <body class="d-flex flex-column min-vh-100 pt-5">
 
-    <nav class="navbar navbar-expand-lg bg-white navbar-shadow fixed-top w-100">
-        <div class="container d-flex justify-content-between align-items-center pe-3">
+    <nav class="navbar navbar-expand-lg navbar-shadow fixed-top w-100" style="background-color: #D2D4D8;">
+        <div class=" container d-flex justify-content-between align-items-center pe-3">
             <a class="navbar-brand fw-bold fs-3" href="#">
                 <img src="images/destinote_logo.png" alt="Destinote Logo" width="40" height="40"
                     class="d-inline-block align-text-top">
                 Destinote
             </a>
-            <a class="nav-link text-dark fs-5 fw-bold" href="index.php">Destinations Dashboard</a>
+            <a class="nav-link text-dark fs-5 fw-bold" href="destinations.php">Destinations Dashboard</a>
             <div>
-                <button class="btn btn-outline-transparent me-2 fw-semibold"><i
-                        class="bi bi-person-fill fst-normal fs-5">
-                        Profile</i></button>
-                <button class="btn btn-primary fw-semibold">Sign out</button>
+                <a href="profile.php"><button class="btn btn-outline-transparent me-2 fw-semibold"><i
+                            class="bi bi-person-fill fst-normal fs-5">Profile</i></button></a>
+                <a href="includes/signout_process.php" class="btn btn-primary fw-semibold">Sign out</a>
             </div>
         </div>
     </nav>
