@@ -7,9 +7,11 @@ body {
 }
 
 /* ====== HERO SECTION ====== */
-.hero-section img {
+.hero-section {
+  background-image: url("../images/background.jpg");
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   height: 100vh;
   position: relative;
 }
@@ -102,6 +104,49 @@ body {
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(135, 206, 250, 0.7); /* Light sky blue */
+}
+
+/* ====== Modal Content ====== */
+
+.modal-content {
+  border-radius: 15px;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+#imagePreview {
+  transition: opacity 0.3s ease;
+}
+
+.destination-card {
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+}
+
+.destination-card .card-body {
+  padding: 1.25rem 1.5rem;
+}
+
+.destination-card .badge {
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+
+.destination-card .card-footer .btn {
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 0.9rem;
 }
 
 /* ===== CUSTOM GRADIENT ===== */

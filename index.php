@@ -41,7 +41,7 @@
         </div>
     </nav>
 
-    <section class="hero-section" style="background-image: url('images/background.jpg');">
+    <section class="hero-section">
         <div class="hero-overlay d-flex flex-column justify-content-center align-items-center text-center">
             <span><img src="images/destinote_logo.png" alt="Destinote Logo" width="80" height="80"
                     class="floating-logo">
@@ -208,7 +208,7 @@
                 <div class="modal-body p-4">
                     <h2 class="text-center fs-5 mb-3">Create your account</h2>
                     <div id="signupMessage" class="alert d-none text-center" role="alert"></div>
-                    <form action="includes/register_process.php" method="POST" class="fw-medium">
+                    <form action="includes/signup_process.php" method="POST" class="fw-medium">
                         <div class="mb-3">
                             <div class="row mb-3">
                                 <div class="col-6">
