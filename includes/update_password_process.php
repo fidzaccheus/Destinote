@@ -20,12 +20,22 @@ $stmt->execute();
 $hash = $stmt->get_result()->fetch_assoc()['password'];
 
 if (!password_verify($current, $hash)) {
-    header("Location: ../profile.php?status=error&message=Current password incorrect");
+    header("Location: ../profile.php?tab=security&status=error&message=Current password incorrect");
+    exit();
+}
+
+if (strlen($new) < 6) {
+    header("Location: ../profile.php?tab=security&status=error&message=New password must be at least 6 characters long");
+    exit();
+}
+
+if (password_verify($new, $hash)) {
+    header("Location: ../profile.php?tab=security&status=error&message=New password cannot be the same as the current password");
     exit();
 }
 
 if ($new !== $confirm) {
-    header("Location: ../profile.php?status=error&message=New passwords do not match");
+    header("Location: ../profile.php?tab=security&status=error&message=New passwords do not match");
     exit();
 }
 
@@ -35,6 +45,6 @@ $stmt_update = $conn->prepare($sql_update);
 $stmt_update->bind_param("si", $hashed_new, $user_id);
 $stmt_update->execute();
 
-header("Location: ../profile.php?status=success&message=Password updated successfully");
+header("Location: ../profile.php?tab=security&status=success&message=Password updated successfully");
 exit();
 ?>

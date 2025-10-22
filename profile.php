@@ -182,7 +182,8 @@ $remaining_percent = 100 - ($completed_percent + $planned_percent);
                     <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
                         <h5 class="fw-bold">Change Password</h5>
                         <p class="text-muted">Ensure your account is using a strong password.</p>
-                        <form action="includes/update_password.php" method="POST">
+                        <div id="securityAlert"></div>
+                        <form action="includes/update_password_process.php" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Current Password</label>
                                 <input type="password" class="form-control" name="current_password" required>
@@ -241,6 +242,31 @@ $remaining_percent = 100 - ($completed_percent + $planned_percent);
                         window.location.href = signOutBtn.getAttribute("href");
                     }, 1000);
                 });
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const tab = params.get("tab");
+            const status = params.get("status");
+            const message = params.get("message");
+
+            if (tab === "security") {
+                const trigger = document.querySelector('#security-tab');
+                const tabObj = new bootstrap.Tab(trigger);
+                tabObj.show();
+            }
+
+            if (status && message) {
+                const alertContainer = document.getElementById("securityAlert");
+                if (alertContainer) {
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-${status === "success" ? "success" : "danger"} alert-dismissible fade show" role="alert">
+                            ${decodeURIComponent(message)}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>`;
+                }
+
+                const cleanUrl = window.location.origin + window.location.pathname;
+                window.history.replaceState({}, document.title, cleanUrl);
             }
         });
     </script>

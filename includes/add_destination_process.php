@@ -18,12 +18,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $imageTmpPath = $_FILES['image']['tmp_name'];
         $imageType = mime_content_type($imageTmpPath);
+        $imageSize = $_FILES['image']['size'];
+        $maxSize = 5 * 1024 * 1024;
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png', 'image/avif'];
 
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if ($imageSize > $maxSize) {
+            echo "<script>alert('Image exceeds the 2MB limit. Please upload a smaller file.'); window.history.back();</script>";
+            exit();
+        }
+
         if (in_array($imageType, $allowedTypes)) {
             $imageData = file_get_contents($imageTmpPath);
         } else {
-            echo "<script>alert('Invalid image format. Only JPG, PNG, and GIF are allowed.'); window.history.back();</script>";
+            echo "<script>alert('Invalid image format. Only JPG, PNG, and GIF are allowed. Detected MIME type: $imageType'); window.history.back();</script>";
             exit();
         }
     }
