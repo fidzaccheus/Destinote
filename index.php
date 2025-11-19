@@ -180,7 +180,7 @@
                 <div class="modal-body p-4">
                     <h2 class="text-center fs-5 mb-3">Sign in to your account</h2>
                     <div id="signinMessage" class="alert d-none text-center" role="alert"></div>
-                    <form action="includes/signin_process.php" method="POST" class="fw-medium">
+                    <form action="includes/signin.php" method="POST" class="fw-medium">
                         <div class="mb-3">
                             <label class="form-label">Email address</label>
                             <input type="email" name="email_address" class="form-control" placeholder="Enter your email"
@@ -208,7 +208,7 @@
                 <div class="modal-body p-4">
                     <h2 class="text-center fs-5 mb-3">Create your account</h2>
                     <div id="signupMessage" class="alert d-none text-center" role="alert"></div>
-                    <form action="includes/signup_process.php" method="POST" class="fw-medium">
+                    <form action="includes/signup.php" method="POST" class="fw-medium">
                         <div class="mb-3">
                             <div class="row mb-3">
                                 <div class="col-6">

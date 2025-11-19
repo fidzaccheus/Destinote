@@ -31,7 +31,7 @@ if (!isset($_SESSION['id'])) {
                 <a href="profile.php" class="btn btn-outline-transparent me-2 fw-semibold">
                     <i class="bi bi-person-fill fs-5"></i> Profile
                 </a>
-                <a href="includes/signout_process.php" class="btn btn-primary fw-semibold" id="signOutBtn">Sign out</a>
+                <a href="includes/signout.php" class="btn btn-primary fw-semibold" id="signOutBtn">Sign out</a>
             </div>
         </div>
     </nav>
@@ -44,9 +44,11 @@ if (!isset($_SESSION['id'])) {
 
         <div class="row justify-content-center mb-4">
             <div class="col-md-8">
-                <form class="row g-2 align-items-center">
+                <form class="row g-2 align-items-center" method="GET">
                     <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="Search destinations...">
+                        <input type="text" name="search" class="form-control" placeholder="Search destinations..."
+                            value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+
                     </div>
                     <div class="col-md-3 text-md-end text-center">
                         <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
@@ -64,11 +66,39 @@ if (!isset($_SESSION['id'])) {
         $user_id = $_SESSION['id'] ?? null;
 
         if ($user_id) {
-            $sql = "SELECT * FROM destinations WHERE user_id = ? ORDER BY created_at DESC";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $user_id);
+            $search = $_GET['search'] ?? '';
+
+            if (!empty($search)) {
+                // Searching mode
+                $sql = "SELECT * FROM destinations 
+                        WHERE user_id = ?
+                        AND (
+                            destination_name LIKE ?
+                            OR country LIKE ?
+                            OR city LIKE ?
+                            OR tag LIKE ?
+                            OR description LIKE ?
+                        )
+                        ORDER BY created_at DESC";
+
+                $like = "%$search%";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("isssss", $user_id, $like, $like, $like, $like, $like);
+
+            } else {
+                // Normal list
+                $sql = "SELECT * FROM destinations 
+                        WHERE user_id = ?
+                        ORDER BY created_at DESC";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $user_id);
+            }
+
             $stmt->execute();
             $result = $stmt->get_result();
+
 
             if ($result && $result->num_rows > 0) {
                 echo '<div class="row g-4 mt-4">';
@@ -121,7 +151,7 @@ if (!isset($_SESSION['id'])) {
                                     <button class="btn btn-sm btn-outline-danger" 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#deleteConfirmModal" 
-                                        data-delete-url="includes/delete_destination_process.php?id={$id}">
+                                        data-delete-url="includes/delete_destination.php?id={$id}">
                                         <i class="bi bi-trash"></i> Delete
                                     </button>
                                 </div>
@@ -137,7 +167,7 @@ if (!isset($_SESSION['id'])) {
                                     <h5 class="modal-title fw-bold">Edit Destination</h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                 </div>
-                                <form action="includes/edit_destination_process.php" method="POST" enctype="multipart/form-data">
+                                <form action="includes/edit_destination.php" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="{$id}">
                                     <div class="modal-body p-4">
                                         <div class="row g-3">
@@ -214,7 +244,7 @@ if (!isset($_SESSION['id'])) {
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="includes/add_destination_process.php" method="POST" enctype="multipart/form-data">
+                <form action="includes/add_destination.php" method="POST" enctype="multipart/form-data">
                     <div class="modal-body p-4">
                         <div class="row g-3">
                             <div class="col-md-6">

@@ -72,7 +72,7 @@ $remaining_percent = 100 - ($completed_percent + $planned_percent);
             <div>
                 <a href="profile.php"><button class="btn btn-outline-transparent me-2 fw-semibold"><i
                             class="bi bi-person-fill fst-normal fs-5">Profile</i></button></a>
-                <a href="includes/signout_process.php" class="btn btn-primary fw-semibold" id="signOutBtn">Sign out</a>
+                <a href="includes/signout.php" class="btn btn-primary fw-semibold" id="signOutBtn">Sign out</a>
             </div>
         </div>
     </nav>
@@ -183,7 +183,7 @@ $remaining_percent = 100 - ($completed_percent + $planned_percent);
                         <h5 class="fw-bold">Change Password</h5>
                         <p class="text-muted">Ensure your account is using a strong password.</p>
                         <div id="securityAlert"></div>
-                        <form action="includes/update_password_process.php" method="POST">
+                        <form action="includes/update_password.php" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Current Password</label>
                                 <input type="password" class="form-control" name="current_password" required>

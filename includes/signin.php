@@ -15,12 +15,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
+        if ($user['is_verified'] == 0) {
+            header("Location: ../index.php?status=error&message=Please%20verify%20your%20email%20first.&showModal=signInModal");
+            exit();
+        }
+
         if (password_verify($password, $user['password'])) {
             $_SESSION['id'] = $user['id'];
             $_SESSION['email_address'] = $user['email_address'];
 
-            header("Location: ../index.php?status=success&message=Welcome%20back!&showModal=signInModal&redirect=dashboard");
-            exit();
+            if ($email_address === "admin@destinote.com") {
+                header("Location: ../admin.php?status=success&message=Welcome%20back!&showModal=signInModal&redirect=dashboard");
+                exit();
+            } else {
+                header("Location: ../index.php?status=success&message=Welcome%20back!&showModal=signInModal&redirect=dashboard");
+                exit();
+            }
+
         } else {
             header("Location: ../index.php?status=error&message=Incorrect%20password.&showModal=signInModal");
             exit();
